@@ -15,8 +15,8 @@
 ]]></content>
   </entry>
   <entry>
-    <title>Transmission结合File browser搭建小型BT云战</title>
-    <url>/2021/01/27/Transmission%E7%BB%93%E5%90%88File-browser%E6%90%AD%E5%BB%BA%E5%B0%8F%E5%9E%8BBT%E4%BA%91%E6%88%98/</url>
+    <title>Transmission结合File browser搭建小型BT云站</title>
+    <url>/2021/01/27/Transmission%E7%BB%93%E5%90%88File-browser%E6%90%AD%E5%BB%BA%E5%B0%8F%E5%9E%8BBT%E4%BA%91%E7%AB%99/</url>
     <content><![CDATA[<p>通过Transmission提供种子文件的上传、下载和做种，File browser 作为在线文件浏览器提供部分格式视频（mp4、flv）在线收看和文件下载功能。</p>
 <ul>
 <li>操作系统：Ubuntu 18.04 LTS<h2 id="Transmission部署"><a href="#Transmission部署" class="headerlink" title="Transmission部署"></a>Transmission部署</h2><h3 id="安装下载"><a href="#安装下载" class="headerlink" title="安装下载"></a>安装下载</h3>可以直接通过apt安装<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install transmission-daemon</span><br></pre></td></tr></table></figure>
