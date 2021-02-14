@@ -97,4 +97,38 @@ Transmission服务下载的文件默认存放在/var/lib/transmission-daemon/dow
         <tag>String</tag>
       </tags>
   </entry>
+  <entry>
+    <title>LeetCode-1371-每个元音包含偶数次的最长子字符串</title>
+    <url>/2021/02/14/LeetCode-1371-%E6%AF%8F%E4%B8%AA%E5%85%83%E9%9F%B3%E5%8C%85%E5%90%AB%E5%81%B6%E6%95%B0%E6%AC%A1%E7%9A%84%E6%9C%80%E9%95%BF%E5%AD%90%E5%AD%97%E7%AC%A6%E4%B8%B2/</url>
+    <content><![CDATA[<h2 id="题目地址（LeetCode-1371）"><a href="#题目地址（LeetCode-1371）" class="headerlink" title="题目地址（LeetCode-1371）"></a>题目地址（LeetCode-1371）</h2><p><a class="link"   href="https://leetcode.com/problems/find-the-longest-substring-containing-vowels-in-even-counts/" >https://leetcode.com/problems/find-the-longest-substring-containing-vowels-in-even-counts/<i class="fas fa-external-link-alt"></i></a></p>
+<h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">给你一个字符串 s ，请你返回满足以下条件的最长子字符串的长度：每个元音字母，即 &#39;a&#39;，&#39;e&#39;，&#39;i&#39;，&#39;o&#39;，&#39;u&#39; ，在子字符串中都恰好出现了偶数次。</span><br></pre></td></tr></table></figure>
+<p>示例1:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">输入：s &#x3D; &quot;eleetminicoworoep&quot;</span><br><span class="line">输出：13</span><br><span class="line">解释：最长子字符串是 &quot;leetminicowor&quot; ，它包含 e，i，o 各 2 个，以及 0 个 a，u 。</span><br></pre></td></tr></table></figure>
+<p>示例2:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">输入：s &#x3D; &quot;leetcodeisgreat&quot;</span><br><span class="line">输出：5</span><br><span class="line">解释：最长子字符串是 &quot;leetc&quot; ，其中包含 2 个 e 。</span><br></pre></td></tr></table></figure>
+<p>示例3:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">输入：s &#x3D; &quot;bcbcbc&quot;</span><br><span class="line">输出：6</span><br><span class="line">解释：这个示例中，字符串 &quot;bcbcbc&quot; 本身就是最长的，因为所有的元音 a，e，i，o，u 都出现了 0 次。</span><br></pre></td></tr></table></figure>
+<h2 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h2><ul>
+<li><p><code>a,e,i,o,u</code> 五个字母可以分别用二进制上一的一位来表示其在字符串中出现次数的奇偶，第0位上0表示字母<code>a</code>出现了偶数次，1表示出现了奇数次；第1位上0表示字母<code>e</code>出现了偶数次，1表示出现了奇数次，以此类推。则二进制数<code>00000</code>对应了<code>a,e,i,o,u</code>各个字母出现奇偶次的32种可能排列组合。</p>
+</li>
+<li><p>对于每一个子字符串来说，<code>[0,i]</code>都会对应了一个五位二进制数<code>xxxxx</code>，只有当该数为<code>00000</code>时，该子字符串才是题目所需的答案。对于子字符串<code>[0,i]</code>和<code>[0,j]</code>来说，当这两个子字符串所对应的二进制数相同时，则二者之间的<code>[i+1,j]</code>子字符串所对应的二进制状态数一定是<code>00000</code>，即满足题目所需。</p>
+<p>按照上述思路，代码如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">findTheLongestSubstring</span><span class="params">(String s)</span> </span>&#123;</span><br><span class="line">        HashMap&lt;Character, Integer&gt; hashMap = <span class="keyword">new</span> HashMap&lt;Character, Integer&gt;();</span><br><span class="line">        HashMap&lt;Integer, Integer&gt; stateMap = <span class="keyword">new</span> HashMap&lt;Integer, Integer&gt;();</span><br><span class="line">        hashMap.put(<span class="string">&#x27;a&#x27;</span>, <span class="number">1</span>);</span><br><span class="line">        hashMap.put(<span class="string">&#x27;e&#x27;</span>, <span class="number">2</span>);</span><br><span class="line">        hashMap.put(<span class="string">&#x27;i&#x27;</span>, <span class="number">4</span>);</span><br><span class="line">        hashMap.put(<span class="string">&#x27;o&#x27;</span>, <span class="number">8</span>);</span><br><span class="line">        hashMap.put(<span class="string">&#x27;u&#x27;</span>, <span class="number">16</span>);</span><br><span class="line">        <span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> max = <span class="number">0</span>;</span><br><span class="line">        stateMap.putIfAbsent(<span class="number">0</span>, -<span class="number">1</span>);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; s.length(); i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (hashMap.containsKey(s.charAt(i))) &#123;</span><br><span class="line">                res ^= hashMap.get(s.charAt(i));</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// 如果当前二进制状态在之前出现过，则计算二者之间的子字符串有多长，该子字符串一定是满足题目要求的子字符串</span></span><br><span class="line">            <span class="keyword">if</span> (stateMap.containsKey(res))&#123;</span><br><span class="line">                max = Math.max(max, i - stateMap.get(res));</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// 记录每个二进制状态第一次出现时的索引</span></span><br><span class="line">            stateMap.putIfAbsent(res, i);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> max;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>Runtime beats: 32.38%<br>Memory usage beats: 45.71%</p>
+</blockquote>
+</li>
+</ul>
+<p>以示例1中的测试用例为例，下表罗列了各个从索引0开始的子字符串对应的二进制状态码：<br>| 子字符串 | 二进制状态码 | 索引位置 |<br>| :—-| :—-: | :—-: |<br>| e | 00010 | 0 |<br>| el | 00010 | 1 |<br>| ele | 00000| 2 |<br>| elee | 00010 | 3 |<br>| eleet | 00010 | 4 |<br>| eleetm | 00010 | 5 |<br>| eleetmi | 00110 | 6 |<br>| eleetmin | 00110 | 7 |<br>| eleetmini | 00010 | 8 |<br>| eleetminic | 00010 | 9 |<br>| eleetminico | 01010 | 10 |<br>| eleetminicow | 01010 | 11 |<br>| eleetminicowo | 00010 | 12 |<br>| eleetminicowor | 00010 | 13 |<br>| eleetminicoworo | 01010 | 14 |<br>| eleetminicoworoe | 01000 | 15 |<br>| eleetminicoworoep | 01000 | 16 |</p>
+<p>其中子字符串<code>e</code>和<code>eleetminicowor</code>所对应的二进制状态码一样，二者相减得13，即字符串<code>leetminicowor</code>为符合要求的子字符串。</p>
+]]></content>
+      <categories>
+        <category>算法</category>
+      </categories>
+      <tags>
+        <tag>LeetCode</tag>
+        <tag>String</tag>
+        <tag>Favorite Problem</tag>
+      </tags>
+  </entry>
 </search>
