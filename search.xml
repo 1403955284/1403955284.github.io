@@ -119,7 +119,101 @@ Transmission服务下载的文件默认存放在/var/lib/transmission-daemon/dow
 </blockquote>
 </li>
 </ul>
-<p>以示例1中的测试用例为例，下表罗列了各个从索引0开始的子字符串对应的二进制状态码：<br>| 子字符串 | 二进制状态码 | 索引位置 |<br>| :—-| :—-: | :—-: |<br>| e | 00010 | 0 |<br>| el | 00010 | 1 |<br>| ele | 00000| 2 |<br>| elee | 00010 | 3 |<br>| eleet | 00010 | 4 |<br>| eleetm | 00010 | 5 |<br>| eleetmi | 00110 | 6 |<br>| eleetmin | 00110 | 7 |<br>| eleetmini | 00010 | 8 |<br>| eleetminic | 00010 | 9 |<br>| eleetminico | 01010 | 10 |<br>| eleetminicow | 01010 | 11 |<br>| eleetminicowo | 00010 | 12 |<br>| eleetminicowor | 00010 | 13 |<br>| eleetminicoworo | 01010 | 14 |<br>| eleetminicoworoe | 01000 | 15 |<br>| eleetminicoworoep | 01000 | 16 |</p>
+<p>以示例1中的测试用例为例，下表罗列了各个从索引0开始的子字符串对应的二进制状态码：</p>
+<table>
+<thead>
+<tr>
+<th align="left">子字符串</th>
+<th align="center">二进制状态码</th>
+<th align="center">索引位置</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">e</td>
+<td align="center">00010</td>
+<td align="center">0</td>
+</tr>
+<tr>
+<td align="left">el</td>
+<td align="center">00010</td>
+<td align="center">1</td>
+</tr>
+<tr>
+<td align="left">ele</td>
+<td align="center">00000</td>
+<td align="center">2</td>
+</tr>
+<tr>
+<td align="left">elee</td>
+<td align="center">00010</td>
+<td align="center">3</td>
+</tr>
+<tr>
+<td align="left">eleet</td>
+<td align="center">00010</td>
+<td align="center">4</td>
+</tr>
+<tr>
+<td align="left">eleetm</td>
+<td align="center">00010</td>
+<td align="center">5</td>
+</tr>
+<tr>
+<td align="left">eleetmi</td>
+<td align="center">00110</td>
+<td align="center">6</td>
+</tr>
+<tr>
+<td align="left">eleetmin</td>
+<td align="center">00110</td>
+<td align="center">7</td>
+</tr>
+<tr>
+<td align="left">eleetmini</td>
+<td align="center">00010</td>
+<td align="center">8</td>
+</tr>
+<tr>
+<td align="left">eleetminic</td>
+<td align="center">00010</td>
+<td align="center">9</td>
+</tr>
+<tr>
+<td align="left">eleetminico</td>
+<td align="center">01010</td>
+<td align="center">10</td>
+</tr>
+<tr>
+<td align="left">eleetminicow</td>
+<td align="center">01010</td>
+<td align="center">11</td>
+</tr>
+<tr>
+<td align="left">eleetminicowo</td>
+<td align="center">00010</td>
+<td align="center">12</td>
+</tr>
+<tr>
+<td align="left">eleetminicowor</td>
+<td align="center">00010</td>
+<td align="center">13</td>
+</tr>
+<tr>
+<td align="left">eleetminicoworo</td>
+<td align="center">01010</td>
+<td align="center">14</td>
+</tr>
+<tr>
+<td align="left">eleetminicoworoe</td>
+<td align="center">01000</td>
+<td align="center">15</td>
+</tr>
+<tr>
+<td align="left">eleetminicoworoep</td>
+<td align="center">01000</td>
+<td align="center">16</td>
+</tr>
+</tbody></table>
 <p>其中子字符串<code>e</code>和<code>eleetminicowor</code>所对应的二进制状态码一样，二者相减得13，即字符串<code>leetminicowor</code>为符合要求的子字符串。</p>
 ]]></content>
       <categories>
