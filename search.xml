@@ -225,4 +225,44 @@ Transmission服务下载的文件默认存放在/var/lib/transmission-daemon/dow
         <tag>Favorite Problem</tag>
       </tags>
   </entry>
+  <entry>
+    <title>nohup中2&gt;&amp;1是什么意思</title>
+    <url>/2021/02/15/nohup%E4%B8%AD2-1%E6%98%AF%E4%BB%80%E4%B9%88%E6%84%8F%E6%80%9D/</url>
+    <content><![CDATA[<p><strong>之前一直看到有这样的命令<code> nohup xxx.sh &gt; log.log 2&gt;&amp;1 &amp;</code>,对其中的<code>2&gt;&amp;1</code>作用一直不是很清楚，查阅了相关资料后，在此记录一下。</strong></p>
+<hr>
+<h2 id="nohup命令用法"><a href="#nohup命令用法" class="headerlink" title="nohup命令用法"></a>nohup命令用法</h2><p><strong>nohup</strong>命令全称no hang up，即不挂起，用于在退出终端后不中断的继续执行某一命令。该命令会默认输出一个<strong>nohup.txt</strong>的文件到当前路径下，如果该文件不可写则会将输出重定向到 <strong>$HOME/nohup.txt</strong>。</p>
+<h3 id="语法格式"><a href="#语法格式" class="headerlink" title="语法格式"></a>语法格式</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">nohup Command [Arg ...] [&amp;]</span><br></pre></td></tr></table></figure>
+<p><strong>Command</strong>：具体要执行的命令<br><strong>Arg</strong>：相关参数，或者是重定向输出的文件<br>**&amp;**：让命令在终端退出后可以继续执行</p>
+<p><strong><em>示例</em></strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">nohup start.sh &gt; log.txt 2&gt;&amp;1 &amp;</span><br></pre></td></tr></table></figure>
+<h2 id="2-gt-amp-1含义说明"><a href="#2-gt-amp-1含义说明" class="headerlink" title="2&gt;&amp;1含义说明"></a>2&gt;&amp;1含义说明</h2><h3 id="标准输出重定向（stdout）"><a href="#标准输出重定向（stdout）" class="headerlink" title="标准输出重定向（stdout）"></a>标准输出重定向（stdout）</h3><p>当我们想看到一个可读文件的具体内容时，通常会使用<code>cat</code>命令，文件中的内容会被打印到终端上显示。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ cat hello.txt</span><br><span class="line">Hello World</span><br></pre></td></tr></table></figure>
+<p>“Hello World”即是文件hello.txt的内容，它被输出到了终端上。我们可以利用<code>&gt;</code>将这个输出位置重定向到我们期望的文件中</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ cat hello.txt &gt; out.log</span><br><span class="line"></span><br><span class="line">$ cat out.log</span><br><span class="line">Hello World</span><br></pre></td></tr></table></figure>
+<p>这里的<code>&gt;</code>就是一个输出重定向符，可以看到，第一条命令在终端上没有任何输出，第二条命令则在终端上打印了文件的内容。实际上<code>cat hello.txt &gt; out.log</code>是一种简写方式，它的完整写法应该如下：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ cat hello.txt 1&gt; out.log</span><br></pre></td></tr></table></figure>
+<p>其中：</p>
+<ul>
+<li><strong><em><code>1</code>是标准输出（stdout）的文件描述符（File descriptor）</em></strong></li>
+<li><code>1</code>和<code>&gt;</code>之间不可以有空格，<code>1&gt; out.log</code>表达了stdout指向了文件<code>out.log</code></li>
+<li><code>&gt;</code>和<code>out.log</code>之间可以没有空格</li>
+</ul>
+<h3 id="标准出错重定向"><a href="#标准出错重定向" class="headerlink" title="标准出错重定向"></a>标准出错重定向</h3><p>如果在shell中执行的命令发生了错误，比如<code>cat</code>了一个一个不存在的文件，Shell会输出错误信息，即标准出错（stderr）。同样的，stderr会被默认输出到终端上，如下所示：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ cat hello.txt</span><br><span class="line">cat: hello.txt: No such file or directory</span><br></pre></td></tr></table></figure>
+<p>即使我们尝试这样重定向输出，错误信息还是会被打印到终端上：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ cat hello.txt &gt; output.txt</span><br><span class="line">cat: hello.txt: No such file or directory</span><br></pre></td></tr></table></figure>
+<p>因为这一条命令仅仅重定向了stdout，而stderr还是被默认指向了终端。<br>因此，如果你不想在屏幕上看到出错打印，可以采取的办法就是重定向 stderr（重新改变 sterrr 的输出方向），将其指向其他的设备，譬如一个文件。和 stdout 类似，**stderr 在 Shell 中也有自己的代号是<code>2</code>**，并参考前面标准输出的完整写法，我们可以写出如下形式：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ cat hello.txt 2&gt; log.txt</span><br><span class="line"></span><br><span class="line">$ cat log.txt</span><br><span class="line">cat: hello.txt: No such file or directory</span><br></pre></td></tr></table></figure>
+<h3 id="标准输出和标准出错同时重定向"><a href="#标准输出和标准出错同时重定向" class="headerlink" title="标准输出和标准出错同时重定向"></a>标准输出和标准出错同时重定向</h3><p>通过上面的分析，大概能够猜出<code>2&gt;&amp;1</code>命令的含义了。其中<code>&amp;1</code>是stdout引用的写法，如果替换成<code>1</code>，Shell会认为<code>1</code>是某一文件的名称，<strong>该命令的含义为将stderr的输出重定向到stdout</strong>。回头看这条命令：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">nohup start.sh &gt; log.txt 2&gt;&amp;1 &amp;</span><br></pre></td></tr></table></figure>
+<p>它表示了将<code>start.sh</code>的stdout和stderr同时重定向到log.txt文件，需要注意的是<strong>这里的<code>&gt;</code>和<code>&amp;1</code>之间不可以有空格</strong>。</p>
+]]></content>
+      <categories>
+        <category>操作系统</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+        <tag>Shell</tag>
+      </tags>
+  </entry>
 </search>
