@@ -215,7 +215,7 @@
     
     
         <span class="article-wordcount article-meta-item">
-            <i class="fas fa-file-word"></i>&nbsp;<span>848 字</span>
+            <i class="fas fa-file-word"></i>&nbsp;<span>846 字</span>
         </span>
     
     
@@ -259,7 +259,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ cat hello.txt</span><br><span class="line">cat: hello.txt: No such file or directory</span><br></pre></td></tr></table></figure>
 <p>即使我们尝试这样重定向输出，错误信息还是会被打印到终端上：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ cat hello.txt &gt; output.txt</span><br><span class="line">cat: hello.txt: No such file or directory</span><br></pre></td></tr></table></figure>
-<p>因为这一条命令仅仅重定向了stdout，而stderr还是被默认指向了终端。<br>因此，如果你不想在屏幕上看到出错打印，可以采取的办法就是重定向 stderr（重新改变 sterrr 的输出方向），将其指向其他的设备，譬如一个文件。和 stdout 类似，**stderr 在 Shell 中也有自己的代号是<code>2</code>**，并参考前面标准输出的完整写法，我们可以写出如下形式：</p>
+<p>因为这一条命令仅仅重定向了stdout，而stderr还是被默认指向了终端。<br>因此，如果你不想在屏幕上看到出错打印，可以采取的办法就是重定向 stderr（重新改变 sterrr 的输出方向），将其指向其他的设备，譬如一个文件。和 stdout 类似，**stderr在Shell中也有自己的代号是<code>2</code>**，并参考前面标准输出的完整写法，我们可以写出如下形式：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ cat hello.txt 2&gt; log.txt</span><br><span class="line"></span><br><span class="line">$ cat log.txt</span><br><span class="line">cat: hello.txt: No such file or directory</span><br></pre></td></tr></table></figure>
 <h3 id="标准输出和标准出错同时重定向"><a href="#标准输出和标准出错同时重定向" class="headerlink" title="标准输出和标准出错同时重定向"></a>标准输出和标准出错同时重定向</h3><p>通过上面的分析，大概能够猜出<code>2&gt;&amp;1</code>命令的含义了。其中<code>&amp;1</code>是stdout引用的写法，如果替换成<code>1</code>，Shell会认为<code>1</code>是某一文件的名称，<strong>该命令的含义为将stderr的输出重定向到stdout</strong>。回头看这条命令：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nohup start.sh &gt; log.txt 2&gt;&amp;1 &amp;</span><br></pre></td></tr></table></figure>
